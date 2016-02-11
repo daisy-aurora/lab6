@@ -12,6 +12,8 @@ function initializePage() {
 	$('.project a').click(addProjectDetails);
 
 	$('#colorBtn').click(randomizeColors);
+
+	$('#apibutton').click(getExternalApi);
 }
 
 /*
@@ -63,4 +65,24 @@ $('.thumbnail').css('background-color', colors[1]);
 $('h1, h2, h3, h4, h5, h5').css('color', colors[2]);
 $('p').css('color', colors[3]);
 $('.project img').css('opacity', .75);
+}
+
+function getExternalApi(e) {
+	e.preventDefault();
+
+	$.get('https://api.spotify.com/v1/artists/4dpARuHxo51G3z768sgnrY', getAPI);
+}
+
+function getAPI(result) {
+	console.log(result);
+
+	var images = result['images'];
+	console.log(images);
+
+	var adeleHTML = '<h1>' + result['name'] + '</h1>' +
+	'<p> popularity: ' + result['popularity'] + '</p>' +
+	'<p> genre: ' + result['genres'][0] + '</p>' + 
+	'<img src="' + images[2]['url'] + '"> <br />' ;
+
+	$("#output").html(adeleHTML); 
 }
